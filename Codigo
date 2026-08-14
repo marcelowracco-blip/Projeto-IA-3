@@ -1,0 +1,5 @@
+lojao-do-lar/ ├── index.html → Página inicial (banner + destaques) ├──
+produtos.html → Página de produtos com filtros ├── contato.html → Página de
+contato com formulário ├── style.css → Estilos (corrigidos e consolidados) ├──
+script.js → Lógica (corrigida) └── imagem/ → Suas imagens (já existentes) ├──
+img-logo.jpeg ├── colchafofinhacasal.jpeg └── ... (demais produtos)

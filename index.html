@@ -1,137 +1,213 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lojão do Lar Lírio dos Vales | Início</title>
-  <meta name="description" content="Renove seu lar com móveis, decoração e utilidades. Frete grátis para toda a região!">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container header-container">
-      <div class="logo">
-        <h1>Lírio dos Vales</h1>
-        <span>Lojão do Lar</span>
-      </div>
-      <nav class="nav-menu" id="navMenu" aria-label="Menu principal">
-        <ul>
-          <li><a href="index.html" class="active">Início</a></li>
-          <li><a href="produtos.html">Produtos</a></li>
-          <li><a href="contato.html">Contato</a></li>
-          <li>
-            <a href="#" id="cartIconBtn" aria-label="Carrinho de compras">
-              <span data-icon="cart"></span>
-              Carrinho
-              <span id="cartCount" class="cart-count">0</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <button class="hamburger" id="hamburger" aria-label="Abrir menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero-banner" aria-label="Banner principal">
-    <div class="hero-content">
-      <span class="hero-badge">
-        <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 1l2.163 4.383L15 6.206l-3.5 3.412.826 4.814L8 12.19l-4.326 2.242.826-4.814L1 6.206l4.837-.823z"/></svg>
-        Semana de Ofertas
-      </span>
-      <h2>Até <em>30% OFF</em> em<br>móveis e decoração</h2>
-      <p>Renove seu lar com estilo e economia.<br>Frete grátis para toda a região!</p>
-      <div class="hero-actions">
-        <a href="produtos.html" class="btn-primary">
-          Ver ofertas
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="contato.html" class="btn-secondary">Fale conosco</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <div class="features-strip" aria-label="Benefícios">
-    <div class="container features-inner">
-      <div class="feature-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        <span>Frete grátis na região</span>
-      </div>
-      <div class="feature-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-        <span>Troca em 30 dias</span>
-      </div>
-      <div class="feature-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        <span>12× sem juros</span>
-      </div>
-      <div class="feature-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span>Qualidade garantida</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- DESTAQUES -->
-  <main>
-    <div class="container section">
-      <div class="section-header">
-        <h2>
-          <small>Seleção especial</small>
-          Destaques da Semana
-        </h2>
-        <a href="produtos.html">
-          Ver todos os produtos
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-      <div class="products-grid" id="destaquesGrid"></div>
-    </div>
-  </main>
-
-  <!-- MODAL CARRINHO -->
-  <div id="cartModal" class="cart-modal" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
-    <div class="cart-modal-content">
-      <div class="cart-header">
-        <h3 id="cartTitle">
-          <span data-icon="bag"></span>
-          Meu Carrinho
-        </h3>
-        <button class="close-cart" aria-label="Fechar carrinho">&times;</button>
-      </div>
-      <ul id="cartItemsList" class="cart-items-list"></ul>
-      <div class="cart-footer">
-        <div class="cart-total-row">
-          <span>Total</span>
-          <span id="cartTotal">R$ 0,00</span>
-        </div>
-        <div class="cart-buttons">
-          <button id="clearCartBtn" class="btn-ghost">Limpar</button>
-          <button id="closeCartBtn" class="btn-dark">Continuar comprando</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="footer" role="contentinfo">
-    <div class="container footer-inner">
-      <div class="footer-brand">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Lojão do Lar Lírio dos Vales</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header-container">
         <div class="logo">
-          <h1>Lírio dos Vales</h1>
-          <span>Lojão do Lar</span>
+          <div class="logo-icon">
+            <a href="index.html">
+              <img
+                src="imagem/img-logo.jpeg"
+                alt="Lojão do Lar Lírio dos Vales"
+                width="190"
+              />
+            </a>
+            <span
+              ><h5>Lojão do Lar<br />Lírio dos Vales</h5></span
+            >
+          </div>
+        </div>
+        <nav class="nav-menu" id="navMenu">
+          <ul>
+            <li><a href="index.html" class="active">Início</a></li>
+            <li><a href="produtos.html">Produtos</a></li>
+            <li><a href="contato.html">Contato</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <button class="cart-icon-btn" id="cartToggle">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+          <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+          </button>
         </div>
       </div>
-      <p class="footer-copy">&copy; 2025 Lojão do Lar Lírio dos Vales — Transformando lares com aconchego e estilo.</p>
-    </div>
-  </footer>
 
-  <script src="script.js"></script>
-  <script>carregarDestaquesHome();</script>
-</body>
+      <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+          <h3>Meu Carrinho</h3>
+          <button id="closeCartBtn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems">
+          <p class="empty-cart-msg">Seu carrinho está vazio</p>
+        </div>
+        <div class="cart-footer">
+          <div class="cart-total">
+            <span>Total:</span>
+            <span id="cartTotalPrice">R$ 0,00</span>
+          </div>
+          <button class="btn-checkout">Finalizar Compra</button>
+          <div id="paymentSection" style="display: none">
+            <hr style="margin: 15px 0" />
+            <h3>Forma de Pagamento</h3>
+            <div class="payment-methods">
+              <button
+                id="btnCredit"
+                class="payment-method-btn"
+                data-method="credit"
+              >
+                💳 Cartão de Crédito
+              </button>
+              <button id="btnPix" class="payment-method-btn" data-method="pix">
+                📱 Pix
+              </button>
+            </div>
+            <div id="creditCardForm" style="display: none">
+              <div class="form-group">
+                <label>Número do Cartão</label>
+                <input
+                  type="text"
+                  id="cardNumber"
+                  placeholder="1234 5678 9012 3456"
+                  maxlength="19"
+                />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Validade</label>
+                  <input
+                    type="text"
+                    id="cardValidity"
+                    placeholder="MM/AA"
+                    maxlength="5"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>CVV</label>
+                  <input
+                    type="text"
+                    id="cardCvv"
+                    placeholder="123"
+                    maxlength="3"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Nome do Titular</label>
+                <input
+                  type="text"
+                  id="cardName"
+                  placeholder="Como está no cartão"
+                />
+              </div>
+            </div>
+            <div id="pixSection" style="display: none">
+              <div id="pixCode"></div>
+            </div>
+            <div class="payment-total">
+              <strong>Total: </strong><span id="paymentTotal">R$ 0,00</span>
+            </div>
+            <button id="btnFinalizar" class="btn-finalizar">
+              ✅ Finalizar Compra
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="cart-overlay" id="cartOverlay"></div>
+    </header>
+
+    <main>
+      <section class="hero-banner">
+        <div class="container">
+          <h2>Transforme sua casa com aconchego e estilo</h2>
+          <div class="category-cards">
+            <div class="category-card" data-cat="cama">
+              <i class="fas fa-bed"></i>
+              <h3>Cama</h3>
+              <p>Lençóis, edredons e mais</p>
+            </div>
+            <div class="category-card" data-cat="mesa">
+              <i class="fas fa-utensils"></i>
+              <h3>Mesa</h3>
+              <p>Jogos americanos, toalhas</p>
+            </div>
+            <div class="category-card" data-cat="banho">
+              <i class="fas fa-bath"></i>
+              <h3>Banho</h3>
+              <p>Toalhas, tapetes, roupões</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="featured-products">
+        <div class="container">
+          <div class="section-title">
+            <h2>Produtos em Destaque</h2>
+            <p>Selecionados especialmente para o seu lar</p>
+          </div>
+          <div class="products-grid" id="featuredGrid"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-logo">
+            <i class="fas fa-home"></i>
+            <span>Lojão do Lar Lírio dos Vales</span>
+            <p>Transformando casas em lares acolhedores</p>
+          </div>
+          <div class="footer-links">
+            <h4>Links Rápidos</h4>
+            <ul>
+              <li><a href="index.html">Início</a></li>
+              <li><a href="produtos.html">Produtos</a></li>
+              <li><a href="contato.html">Contato</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h4>Atendimento</h4>
+            <p><i class="fab fa-whatsapp"></i> (83) 99905-4026</p>
+            <p><i class="far fa-envelope"></i> [SEU-EMAIL@LOJA.COM.BR]</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Lojão do Lar Lírio dos Vales - Todos os direitos
+            reservados
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (typeof produtosDestaque !== "undefined") {
+          exibirProdutosGrid(produtosDestaque, "featuredGrid");
+        }
+      });
+    </script>
+  </body>
 </html>

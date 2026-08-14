@@ -1,300 +1,476 @@
-/* =========================================================
-   LÍRIO DOS VALES — script.js
-   ========================================================= */
-
-// ── Ícones SVG inline (substitui Font Awesome) ─────────────
-const SVG = {
-  cart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`,
-  bag:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
-  plus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
-  arrow:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
-  check:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
-  emptyCart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`,
-  whatsapp: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>`,
-  instagram: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>`,
-};
-
-// ── BANCO DE PRODUTOS ───────────────────────────────────────
+// ===== BANCO DE DADOS DE PRODUTOS =====
 const produtos = [
-  { id: 1,  nome: "Sofá Retrô 3 Lugares",        preco: 899.90,  categoria: "moveis",     imagem: "https://placehold.co/400x300/d6ede3/1a6b4a?text=Sofá", destaque: true  },
-  { id: 2,  nome: "Estante Flutuante",            preco: 239.90,  categoria: "moveis",     imagem: "https://placehold.co/400x300/ede6d8/3a2e24?text=Estante", destaque: true  },
-  { id: 3,  nome: "Luminária Suspensa",           preco: 189.90,  categoria: "iluminacao", imagem: "https://placehold.co/400x300/fef3e2/b06010?text=Luminária", destaque: true  },
-  { id: 4,  nome: "Jogo de Louças Bege",          preco: 149.90,  categoria: "cozinha",    imagem: "https://placehold.co/400x300/fce8e2/c0603a?text=Louças", destaque: false },
-  { id: 5,  nome: "Almofada Estampada",           preco: 59.90,   categoria: "decoracao",  imagem: "https://placehold.co/400x300/e8e0f7/5535aa?text=Almofada", destaque: false },
-  { id: 6,  nome: "Painel Ripado",                preco: 429.90,  categoria: "moveis",     imagem: "https://placehold.co/400x300/d6ede3/1a6b4a?text=Painel", destaque: true  },
-  { id: 7,  nome: "Kit Panelas Antiaderente",     preco: 329.90,  categoria: "cozinha",    imagem: "https://placehold.co/400x300/fce8e2/c0603a?text=Panelas", destaque: true  },
-  { id: 8,  nome: "Abajur de Piso",               preco: 279.90,  categoria: "iluminacao", imagem: "https://placehold.co/400x300/fef3e2/b06010?text=Abajur", destaque: false },
-  { id: 9,  nome: "Cadeira Escandinava",          preco: 379.90,  categoria: "moveis",     imagem: "https://placehold.co/400x300/ede6d8/3a2e24?text=Cadeira", destaque: false },
-  { id: 10, nome: "Tapete Felpudo 2x1,5m",       preco: 149.90,  categoria: "decoracao",  imagem: "https://placehold.co/400x300/e8e0f7/5535aa?text=Tapete", destaque: false },
-  { id: 11, nome: "Lustre de Cristal",            preco: 299.90,  categoria: "iluminacao", imagem: "https://placehold.co/400x300/fef3e2/b06010?text=Lustre", destaque: false },
-  { id: 12, nome: "Jogo de Velas Aromáticas",     preco: 49.90,   categoria: "decoracao",  imagem: "https://placehold.co/400x300/fce8e2/c0603a?text=Velas", destaque: false },
+  {
+    id: 1,
+    nome: "Colcha Fofinha de Casal",
+    categoria: "cama",
+    preco: 40.0,
+    imagem: "imagem/colchafofinhacasal.jpeg",
+    destaque: true,
+  },
+  {
+    id: 2,
+    nome: "Edredom King Microfibra",
+    categoria: "cama",
+    preco: 300.0,
+    imagem: "imagem/colcha casal infantil.jpeg",
+    destaque: true,
+  },
+  {
+    id: 3,
+    nome: "Toalha de Banho Felpuda",
+    categoria: "banho",
+    preco: 49.9,
+    imagem: "imagem/toalha.jpeg",
+    destaque: true,
+  },
+  {
+    id: 4,
+    nome: "Tapete",
+    categoria: "casa",
+    preco: 250.0,
+    imagem: "imagem/tapete.jpeg",
+    destaque: false,
+  },
+  {
+    id: 5,
+    nome: "Colcha Solteiro",
+    categoria: "cama",
+    preco: 300.0,
+    imagem: "imagem/colcha solteiro.jpeg",
+    destaque: true,
+  },
+  {
+    id: 6,
+    nome: "Colcha Solteiro Feminina",
+    categoria: "cama",
+    preco: 300.0,
+    imagem: "imagem/colchasolteirofem.jpeg",
+    destaque: false,
+  },
+  {
+    id: 7,
+    nome: "Colcha Solteiro Masculino",
+    categoria: "cama",
+    preco: 299.9,
+    imagem: "imagem/colchasolteiromasc.jpeg",
+    destaque: true,
+  },
+  {
+    id: 8,
+    nome: "Tapete Marrom",
+    categoria: "casa",
+    preco: 249.9,
+    imagem: "imagem/tapetemarrom.jpeg",
+    destaque: false,
+  },
 ];
 
-const catLabels = {
-  moveis: "Móveis", iluminacao: "Iluminação", cozinha: "Cozinha", decoracao: "Decoração"
-};
+// Formatação de moeda em Real (R$ 1.234,56)
+const formatarMoeda = (valor) =>
+  valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
-// ── CARRINHO ────────────────────────────────────────────────
-let carrinho = JSON.parse(localStorage.getItem('carrinho_ldv')) || [];
+const produtosDestaque = produtos.filter((p) => p.destaque === true);
+
+// ===== CARRINHO (localStorage) =====
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
 function salvarCarrinho() {
-  localStorage.setItem('carrinho_ldv', JSON.stringify(carrinho));
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  atualizarContadorCarrinho();
+  renderizarCarrinho();
+}
+
+function atualizarContadorCarrinho() {
+  const countSpan = document.getElementById("cartCount");
+  if (countSpan) {
+    const totalItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
+    countSpan.innerText = totalItens;
+  }
 }
 
 function adicionarAoCarrinho(id) {
-  const produto = produtos.find(p => p.id === id);
+  const produto = produtos.find((p) => p.id === id);
   if (!produto) return;
-  const item = carrinho.find(i => i.id === id);
-  if (item) item.quantidade++;
-  else carrinho.push({ id: produto.id, nome: produto.nome, preco: produto.preco, quantidade: 1 });
+
+  const itemExistente = carrinho.find((item) => item.id === id);
+  if (itemExistente) {
+    itemExistente.quantidade++;
+  } else {
+    carrinho.push({ ...produto, quantidade: 1 });
+  }
   salvarCarrinho();
-  atualizarCarrinhoUI();
-  mostrarToast(`${produto.nome} adicionado ao carrinho`);
-  animarContador();
+  abrirCartSidebar();
 }
 
-function limparCarrinho() {
-  carrinho = [];
-  salvarCarrinho();
-  atualizarCarrinhoUI();
-}
-
-function atualizarCarrinhoUI() {
-  const countEl  = document.getElementById('cartCount');
-  const listEl   = document.getElementById('cartItemsList');
-  const totalEl  = document.getElementById('cartTotal');
-
-  const total    = carrinho.reduce((s, i) => s + i.preco * i.quantidade, 0);
-  const qtdTotal = carrinho.reduce((s, i) => s + i.quantidade, 0);
-
-  if (countEl) countEl.textContent = qtdTotal;
-  if (totalEl) totalEl.textContent = formatBRL(total);
-
-  if (!listEl) return;
+function renderizarCarrinho() {
+  const cartContainer = document.getElementById("cartItems");
+  const totalSpan = document.getElementById("cartTotalPrice");
+  if (!cartContainer) return;
 
   if (carrinho.length === 0) {
-    listEl.innerHTML = `
-      <li class="cart-empty">
-        ${SVG.emptyCart}
-        <p>Seu carrinho está vazio.</p>
-      </li>`;
+    cartContainer.innerHTML =
+      '<p class="empty-cart-msg">Seu carrinho está vazio</p>';
+    if (totalSpan) totalSpan.innerText = formatarMoeda(0);
+    const paymentSection = document.getElementById("paymentSection");
+    if (paymentSection) paymentSection.style.display = "none";
     return;
   }
 
-  listEl.innerHTML = carrinho.map(item => `
-    <li>
-      <span class="cart-item-name">
-        ${item.nome}
-        <span class="cart-item-qty"> × ${item.quantidade}</span>
-      </span>
-      <span class="cart-item-price">${formatBRL(item.preco * item.quantidade)}</span>
-    </li>
-  `).join('');
-}
+  let html = "";
+  let total = 0;
+  carrinho.forEach((item) => {
+    const subtotal = item.preco * item.quantidade;
+    total += subtotal;
+    html += `
+            <div class="cart-item">
+                <img src="${item.imagem}" alt="${item.nome}">
+                <div class="cart-item-details">
+                    <h4>${item.nome}</h4>
+                    <p>${formatarMoeda(item.preco)}</p>
+                    <div class="cart-item-actions">
+                        <button class="cart-qty-btn" data-id="${item.id}" data-op="minus">-</button>
+                        <span>${item.quantidade}</span>
+                        <button class="cart-qty-btn" data-id="${item.id}" data-op="plus">+</button>
+                        <button class="cart-remove" data-id="${item.id}" title="Remover">🗑️</button>
+                    </div>
+                </div>
+            </div>
+        `;
+  });
+  cartContainer.innerHTML = html;
+  if (totalSpan) totalSpan.innerText = formatarMoeda(total);
 
-function animarContador() {
-  const el = document.getElementById('cartCount');
-  if (!el) return;
-  el.classList.remove('bounce');
-  void el.offsetWidth;
-  el.classList.add('bounce');
-}
-
-// ── FORMATAÇÃO ──────────────────────────────────────────────
-function formatBRL(valor) {
-  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
-
-// ── TOAST ───────────────────────────────────────────────────
-function mostrarToast(msg) {
-  let toast = document.getElementById('toast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'toast';
-    document.body.appendChild(toast);
+  const paymentSection = document.getElementById("paymentSection");
+  if (paymentSection && carrinho.length > 0) {
+    paymentSection.style.display = "block";
+    const paymentTotal = document.getElementById("paymentTotal");
+    if (paymentTotal) paymentTotal.innerText = formatarMoeda(total);
   }
-  toast.innerHTML = `${SVG.check} ${msg}`;
-  toast.classList.add('show');
-  clearTimeout(toast._timer);
-  toast._timer = setTimeout(() => toast.classList.remove('show'), 2800);
+
+  document.querySelectorAll(".cart-qty-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = parseInt(btn.dataset.id);
+      const op = btn.dataset.op;
+      const item = carrinho.find((i) => i.id === id);
+      if (item) {
+        if (op === "plus") item.quantidade++;
+        else {
+          item.quantidade--;
+          if (item.quantidade <= 0)
+            carrinho = carrinho.filter((i) => i.id !== id);
+        }
+        salvarCarrinho();
+      }
+    });
+  });
+
+  document.querySelectorAll(".cart-remove").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = parseInt(btn.dataset.id);
+      carrinho = carrinho.filter((i) => i.id !== id);
+      salvarCarrinho();
+    });
+  });
 }
 
-// ── RENDERIZAR PRODUTOS ─────────────────────────────────────
-function renderizarProdutos(lista, containerId) {
+// ===== UI CARRINHO SIDEBAR =====
+function abrirCartSidebar() {
+  const sidebar = document.getElementById("cartSidebar");
+  const overlay = document.getElementById("cartOverlay");
+  if (sidebar) sidebar.classList.add("open");
+  if (overlay) overlay.classList.add("active");
+}
+
+function fecharCartSidebar() {
+  const sidebar = document.getElementById("cartSidebar");
+  const overlay = document.getElementById("cartOverlay");
+  if (sidebar) sidebar.classList.remove("open");
+  if (overlay) overlay.classList.remove("active");
+}
+
+// ===== PAGAMENTO =====
+function getTotalCarrinho() {
+  return carrinho.reduce(
+    (total, item) => total + item.preco * item.quantidade,
+    0,
+  );
+}
+
+function mostrarFormasPagamento() {
+  if (carrinho.length === 0) {
+    alert("Seu carrinho está vazio!");
+    return;
+  }
+  const paymentSection = document.getElementById("paymentSection");
+  if (paymentSection) {
+    paymentSection.style.display = "block";
+    const btnCheckout = document.querySelector(".btn-checkout");
+    if (btnCheckout) btnCheckout.style.display = "none";
+    paymentSection.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+function togglePaymentMethod(method) {
+  const creditCardForm = document.getElementById("creditCardForm");
+  const pixSection = document.getElementById("pixSection");
+  const methodBtns = document.querySelectorAll(".payment-method-btn");
+
+  methodBtns.forEach((btn) => btn.classList.remove("active"));
+
+  if (method === "credit") {
+    document.getElementById("btnCredit").classList.add("active");
+    if (creditCardForm) creditCardForm.style.display = "block";
+    if (pixSection) pixSection.style.display = "none";
+  } else if (method === "pix") {
+    document.getElementById("btnPix").classList.add("active");
+    if (creditCardForm) creditCardForm.style.display = "none";
+    if (pixSection) pixSection.style.display = "block";
+    gerarCodigoPix();
+  }
+}
+
+function gerarCodigoPix() {
+  const pixCode = document.getElementById("pixCode");
+  if (pixCode) {
+    const total = getTotalCarrinho();
+    const codigo = `pix.${Date.now()}.${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+    pixCode.innerHTML = `
+            <div class="pix-code-box">
+                <p><strong>Código Pix:</strong></p>
+                <code>${codigo}</code>
+                <p><strong>Valor:</strong> ${formatarMoeda(total)}</p>
+                <button onclick="copiarPix()" class="btn-copiar-pix">📋 Copiar código</button>
+            </div>
+        `;
+  }
+}
+
+function copiarPix() {
+  const codeElement = document.querySelector("#pixCode code");
+  if (codeElement) {
+    navigator.clipboard.writeText(codeElement.innerText).then(() => {
+      alert("Código Pix copiado!");
+    });
+  }
+}
+
+function validarCartao(numero, validade, cvv, nome) {
+  const numeroLimpo = numero.replace(/\s/g, "");
+  if (numeroLimpo.length !== 16 || !/^\d+$/.test(numeroLimpo)) {
+    return { valid: false, message: "Número de cartão inválido (16 dígitos)" };
+  }
+  if (!/^\d{2}\/\d{2}$/.test(validade)) {
+    return { valid: false, message: "Validade inválida (MM/AA)" };
+  }
+  if (!/^\d{3}$/.test(cvv)) {
+    return { valid: false, message: "CVV inválido (3 dígitos)" };
+  }
+  if (nome.trim().length < 3) {
+    return { valid: false, message: "Nome do titular inválido" };
+  }
+  return { valid: true, message: "" };
+}
+
+function finalizarCompra() {
+  if (carrinho.length === 0) {
+    alert("Seu carrinho está vazio!");
+    return;
+  }
+
+  const selectedMethod = document.querySelector(".payment-method-btn.active")
+    ?.dataset.method;
+
+  if (!selectedMethod) {
+    alert("Selecione uma forma de pagamento");
+    return;
+  }
+
+  let pagamentoValido = false;
+  let mensagemSucesso = "";
+
+  if (selectedMethod === "credit") {
+    const numero = document.getElementById("cardNumber")?.value || "";
+    const validade = document.getElementById("cardValidity")?.value || "";
+    const cvv = document.getElementById("cardCvv")?.value || "";
+    const nome = document.getElementById("cardName")?.value || "";
+
+    const validacao = validarCartao(numero, validade, cvv, nome);
+    if (!validacao.valid) {
+      alert(validacao.message);
+      return;
+    }
+    pagamentoValido = true;
+    mensagemSucesso = "Pagamento com cartão de crédito processado com sucesso!";
+  } else if (selectedMethod === "pix") {
+    pagamentoValido = true;
+    mensagemSucesso = "Pagamento via Pix confirmado!";
+  }
+
+  if (pagamentoValido) {
+    const total = getTotalCarrinho();
+    carrinho = [];
+    salvarCarrinho();
+    fecharCartSidebar();
+    alert(
+      `${mensagemSucesso}\nTotal: ${formatarMoeda(total)}\n\nPedido finalizado com sucesso! Obrigado pela compra!`,
+    );
+
+    const creditCardForm = document.getElementById("creditCardForm");
+    if (creditCardForm) creditCardForm.reset();
+  }
+}
+
+// ===== PRODUTOS GRID =====
+function exibirProdutosGrid(produtosArray, containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  if (lista.length === 0) {
-    container.innerHTML = '<p style="text-align:center;color:var(--texto-3);padding:3rem 0">Nenhum produto encontrado.</p>';
-    return;
-  }
-
-  container.innerHTML = lista.map(p => `
-    <article class="product-card">
-      <div class="product-img-wrap">
-        <img src="${p.imagem}" alt="${p.nome}" loading="lazy">
-        ${p.destaque ? `<span class="product-badge destaque">Destaque</span>` : ''}
-      </div>
-      <div class="product-info">
-        <div class="product-cat">${catLabels[p.categoria] || p.categoria}</div>
-        <h3 class="product-title">${p.nome}</h3>
-        <div class="product-footer">
-          <span class="product-price">${formatBRL(p.preco)}</span>
-          <button class="buy-btn" data-id="${p.id}" aria-label="Adicionar ${p.nome} ao carrinho">
-            ${SVG.plus} Adicionar
-          </button>
+  container.innerHTML = produtosArray
+    .map(
+      (prod) => `
+        <div class="product-card" data-categoria="${prod.categoria}">
+            <img src="${prod.imagem}" class="product-img" alt="${prod.nome}">
+            <div class="product-info">
+                <h3 class="product-title">${prod.nome}</h3>
+                <p class="product-price">${formatarMoeda(prod.preco)}</p>
+                <button class="btn-add-cart" data-id="${prod.id}">Adicionar ao carrinho</button>
+            </div>
         </div>
-      </div>
-    </article>
-  `).join('');
+    `,
+    )
+    .join("");
 
-  container.querySelectorAll('.buy-btn').forEach(btn => {
-    btn.addEventListener('click', () => adicionarAoCarrinho(parseInt(btn.dataset.id)));
+  document.querySelectorAll(`#${containerId} .btn-add-cart`).forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = parseInt(btn.dataset.id);
+      adicionarAoCarrinho(id);
+    });
   });
 }
-
-// ── HOME: destaques ─────────────────────────────────────────
-function carregarDestaquesHome() {
-  renderizarProdutos(produtos.filter(p => p.destaque), 'destaquesGrid');
-}
-
-// ── PRODUTOS: todos + filtros ───────────────────────────────
-let filtroAtual = 'todos';
 
 function carregarTodosProdutos() {
-  renderizarProdutos(produtos, 'produtosGrid');
+  exibirProdutosGrid(produtos, "allProductsGrid");
 }
 
-function filtrarErenderizarProdutos() {
-  const lista = filtroAtual === 'todos' ? produtos : produtos.filter(p => p.categoria === filtroAtual);
-  renderizarProdutos(lista, 'produtosGrid');
-}
+function initFiltros() {
+  const btns = document.querySelectorAll(".filter-btn");
+  btns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const filter = btn.dataset.filter;
+      btns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
 
-function inicializarFiltros() {
-  const btns = document.querySelectorAll('.filter-btn');
-  btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      btns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      filtroAtual = btn.dataset.cat;
-      filtrarErenderizarProdutos();
+      let filtered = [];
+      if (filter === "all") filtered = produtos;
+      else filtered = produtos.filter((p) => p.categoria === filter);
+
+      exibirProdutosGrid(filtered, "allProductsGrid");
     });
   });
 }
 
-// ── CONTATO ─────────────────────────────────────────────────
-function inicializarContato() {
-  const form = document.getElementById('contactForm');
+// ===== FORMULÁRIO CONTATO =====
+function initContactForm() {
+  const form = document.getElementById("contactForm");
   if (!form) return;
 
-  form.addEventListener('submit', e => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const name    = document.getElementById('name');
-    const email   = document.getElementById('email');
-    const message = document.getElementById('message');
-    const feedback = document.getElementById('formFeedback');
-    let valid = true;
+    let isValid = true;
 
-    ['nameError','emailError','msgError'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = '';
-    });
+    const name = document.getElementById("name");
+    const email = document.getElementById("email");
+    const message = document.getElementById("message");
 
-    if (name.value.trim() === '') {
-      document.getElementById('nameError').textContent = 'Nome é obrigatório.';
-      valid = false;
+    document.getElementById("nameError").innerText = "";
+    document.getElementById("emailError").innerText = "";
+    document.getElementById("messageError").innerText = "";
+
+    if (name.value.trim() === "") {
+      document.getElementById("nameError").innerText = "Nome é obrigatório";
+      isValid = false;
     }
-    const re = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/;
-    if (!email.value.trim()) {
-      document.getElementById('emailError').textContent = 'E-mail obrigatório.';
-      valid = false;
-    } else if (!re.test(email.value)) {
-      document.getElementById('emailError').textContent = 'E-mail inválido.';
-      valid = false;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.value)) {
+      document.getElementById("emailError").innerText = "E-mail inválido";
+      isValid = false;
     }
-    if (message.value.trim() === '') {
-      document.getElementById('msgError').textContent = 'Mensagem não pode estar vazia.';
-      valid = false;
+    if (message.value.trim() === "") {
+      document.getElementById("messageError").innerText =
+        "Mensagem não pode estar vazia";
+      isValid = false;
     }
 
-    if (valid) {
-      feedback.className = 'form-feedback success';
-      feedback.textContent = '✓ Mensagem enviada com sucesso! Em breve retornamos.';
+    if (isValid) {
+      document.getElementById("formSuccessMsg").innerText =
+        "Mensagem enviada com sucesso! Em breve retornamos :)";
       form.reset();
-      setTimeout(() => { feedback.textContent = ''; feedback.className = 'form-feedback'; }, 4000);
-    } else {
-      feedback.className = 'form-feedback error';
-      feedback.textContent = 'Preencha corretamente os campos destacados.';
+      setTimeout(
+        () => (document.getElementById("formSuccessMsg").innerText = ""),
+        4000,
+      );
     }
   });
+}
 
-  document.getElementById('whatsappLink')?.addEventListener('click', e => {
-    e.preventDefault();
-    window.open('https://wa.me/5511912345678', '_blank');
+// ===== INICIALIZAÇÃO =====
+document.addEventListener("DOMContentLoaded", () => {
+  const mobileBtn = document.getElementById("mobileMenuBtn");
+  const navMenu = document.getElementById("navMenu");
+  if (mobileBtn && navMenu) {
+    mobileBtn.addEventListener("click", () => navMenu.classList.toggle("open"));
+  }
+
+  const cartToggle = document.getElementById("cartToggle");
+  if (cartToggle) cartToggle.addEventListener("click", abrirCartSidebar);
+  const closeCart = document.getElementById("closeCartBtn");
+  if (closeCart) closeCart.addEventListener("click", fecharCartSidebar);
+  const overlay = document.getElementById("cartOverlay");
+  if (overlay) overlay.addEventListener("click", fecharCartSidebar);
+
+  const btnCredit = document.getElementById("btnCredit");
+  const btnPix = document.getElementById("btnPix");
+  if (btnCredit)
+    btnCredit.addEventListener("click", () => togglePaymentMethod("credit"));
+  if (btnPix)
+    btnPix.addEventListener("click", () => togglePaymentMethod("pix"));
+
+  const btnFinalizar = document.getElementById("btnFinalizar");
+  if (btnFinalizar) btnFinalizar.addEventListener("click", finalizarCompra);
+
+  const btnCheckout = document.querySelector(".btn-checkout");
+  if (btnCheckout)
+    btnCheckout.addEventListener("click", mostrarFormasPagamento);
+
+  atualizarContadorCarrinho();
+  renderizarCarrinho();
+
+  document.querySelectorAll(".category-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      const cat = card.dataset.cat;
+      window.location.href = `produtos.html?filter=${cat}`;
+    });
   });
-  document.getElementById('instagramLink')?.addEventListener('click', e => {
-    e.preventDefault();
-    window.open('https://instagram.com/liriodosvales', '_blank');
-  });
-}
 
-// ── MODAL DO CARRINHO ───────────────────────────────────────
-function initModal() {
-  const modal    = document.getElementById('cartModal');
-  const cartBtn  = document.getElementById('cartIconBtn');
-  const closeBtn = document.querySelector('.close-cart');
-  const closeCart= document.getElementById('closeCartBtn');
-  const clearBtn = document.getElementById('clearCartBtn');
-
-  const abrirModal = e => {
-    e?.preventDefault();
-    atualizarCarrinhoUI();
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
-  const fecharModal = () => {
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  };
-
-  cartBtn?.addEventListener('click', abrirModal);
-  closeBtn?.addEventListener('click', fecharModal);
-  closeCart?.addEventListener('click', fecharModal);
-  clearBtn?.addEventListener('click', () => { limparCarrinho(); });
-  modal?.addEventListener('click', e => { if (e.target === modal) fecharModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
-}
-
-// ── HEADER SCROLL ───────────────────────────────────────────
-function initHeaderScroll() {
-  const header = document.querySelector('.header');
-  const onScroll = () => header?.classList.toggle('scrolled', window.scrollY > 10);
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-}
-
-// ── MENU HAMBÚRGUER ─────────────────────────────────────────
-function initHamburger() {
-  const btn = document.getElementById('hamburger');
-  const nav = document.getElementById('navMenu');
-  btn?.addEventListener('click', () => nav?.classList.toggle('active'));
-  // Fecha ao clicar em link
-  nav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('active')));
-}
-
-// ── Injetar ícones SVG no HTML ──────────────────────────────
-function injetarIcones() {
-  document.querySelectorAll('[data-icon]').forEach(el => {
-    const key = el.dataset.icon;
-    if (SVG[key]) el.innerHTML = SVG[key];
-  });
-}
-
-// ── INICIALIZAÇÃO GLOBAL ────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  injetarIcones();
-  initHeaderScroll();
-  initHamburger();
-  initModal();
-  atualizarCarrinhoUI();
+  const urlParams = new URLSearchParams(window.location.search);
+  const filterParam = urlParams.get("filter");
+  if (filterParam && window.location.pathname.includes("produtos.html")) {
+    setTimeout(() => {
+      const btnFilter = document.querySelector(
+        `.filter-btn[data-filter="${filterParam}"]`,
+      );
+      if (btnFilter) btnFilter.click();
+    }, 100);
+  }
 });
+
+// Export para uso em contextos globais
+window.produtosDestaque = produtosDestaque;
+window.exibirProdutosGrid = exibirProdutosGrid;
+window.carregarTodosProdutos = carregarTodosProdutos;
+window.initFiltros = initFiltros;
+window.initContactForm = initContactForm;
+window.togglePaymentMethod = togglePaymentMethod;
+window.finalizarCompra = finalizarCompra;
+window.copiarPix = copiarPix;
